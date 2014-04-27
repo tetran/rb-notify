@@ -3,17 +3,93 @@
   <head>
     <title></title>
     <style>
+    @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro);
+    body, input {
+        font: 14px/19px 'Source Code Pro', sans-serif;
+    }
+    body {
+        padding: .5rem;
+        background-color: #FAFAFA;
+        color:#222;
+    }
+    input {
+        padding: 8px;
+        line-height: 1.6;
+        outline: 0;
+        background-color: #E2E5E8;
+        border-width: 0;
+        border-bottom: 1px solid #D4D9DD;
+        border-radius: 2px;
+        transition: border,background 0.4s ease;
+    }
+    input:focus {
+        background-color: #FFF;
+        border-color: #5FCF80;
+    }
+    h2 {
+        margin-top: 0;
+    }
+    .container {
+        width: 24rem;
+        margin: 0 auto;
+        padding: 2rem;
+        border-radius: 4px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.25);
+        background-color: #EDEFF0;
+    }
+    .rb-form {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .rb-form-field {
+        list-style: none;
+        margin: .2rem 0;
+    }
+    .rb-form-field-full {
+        width: 98%;
+    }
+    .rb-form-field-half {
+        width: 44%;
+    }
+    /*
+    .rb-register {
+        display: inline-block;
+        float: right;
+        border-style: solid;
+        border-width: 1px 1px 3px 1px;
+        border-color: #3AC162;
+        border-radius: 4px;
+        padding: 8px 15px;
+        font-size: 1rem;
+        background-color: #5FCF80;
+        outline: 0;
+        color: #FFF;
+        text-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
+    }
+    */
     </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
   </head>
   <body>
-      <h1>This is an options page!</h1>
+      <div class="container">
+          <h2>Review Board Notifier</h2>
+          <ul class="rb-form">
+              <li class="rb-form-field">
+                  <input type="uri" name="uri" placeholder="Server URI (e.g. http://reviewboard.com/)" id="rb-uri" class="rb-form-field-full" />
+              </li>
+              <li class="rb-form-field">
+                  <input type="text" name="username" placeholder="Your username" id="rb-username" class="rb-form-field-full" />
+              </li>
+              <li class="rb-form-field">
+                  <input type="password" name="password" placeholder="Your password" id="rb-password" class="rb-form-field-full" />
+              </li>
+              <!--
+              -->
+              <li class="rb-form-field">
+                  <button id="rb-register" class="rb-register">Register</button>
+              </li>
+          </ul>
+      </div>
       <script src="options.js"></script>
   </body>
 </html>
