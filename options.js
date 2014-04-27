@@ -26,7 +26,7 @@ function setFieldValue(elem_id, value) {
 }
 
 function testAccount() {
-    
+
 }
 
 window.onload = function() {
