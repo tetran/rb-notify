@@ -1,0 +1,18 @@
+body, input, button {
+    font: 14px/19px 'Source Sans Pro', sans-serif;
+}
+input, button {
+    outline: 0;
+}
+body {
+    background-color: #F9FAFA;
+    color:#222;
+}
+.clearfix::before,
+.clearfix::after {
+    content: "";
+    display: table;
+}
+.clearfix::after {
+    clear: both;
+}

@@ -3,8 +3,8 @@ var rbRule;
 function storeRule(rule) {
     localStorage.rbRule = JSON.stringify({
         uri: document.getElementById('rb-uri').value,
-        username: document.getElementById('rb-username').value,
-        password: document.getElementById('rb-password').value
+        username: document.getElementById('rb-username').value
+        // password: document.getElementById('rb-password').value
     });
 }
 
@@ -14,7 +14,7 @@ function loadStoredRule() {
         rbRule = JSON.parse(storedRule);
         setFieldValue('rb-uri', rbRule.uri);
         setFieldValue('rb-username', rbRule.username);
-        setFieldValue('rb-password', rbRule.password);
+        // setFieldValue('rb-password', rbRule.password);
     } catch (e) {
         rbRule = {};
         localStorage.rbRule = JSON.stringify(rbRule);

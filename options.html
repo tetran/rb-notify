@@ -3,24 +3,16 @@
   <head>
     <title></title>
     <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link href='common.css' rel='stylesheet' type='text/css'>
     <style>
-    body, input {
-        font: 14px/19px 'Source Code Pro', sans-serif;
-    }
-    body {
-        padding: .5rem;
-        background-color: #FAFAFA;
-        color:#222;
-    }
     input {
         padding: 8px;
         line-height: 1.6;
-        outline: 0;
         background-color: #E2E5E8;
         border-width: 0;
         border-bottom: 1px solid #D4D9DD;
         border-radius: 2px;
-        transition: border,background 0.4s ease;
+        transition: border, background 0.4s ease;
     }
     input:focus {
         background-color: #FFF;
@@ -49,25 +41,6 @@
     .rb-form-field-full {
         width: 98%;
     }
-    .rb-form-field-half {
-        width: 44%;
-    }
-    /*
-    .rb-register {
-        display: inline-block;
-        float: right;
-        border-style: solid;
-        border-width: 1px 1px 3px 1px;
-        border-color: #3AC162;
-        border-radius: 4px;
-        padding: 8px 15px;
-        font-size: 1rem;
-        background-color: #5FCF80;
-        outline: 0;
-        color: #FFF;
-        text-shadow: 0 1px 0px rgba(0, 0, 0, 0.15);
-    }
-    */
     </style>
   </head>
   <body>
@@ -80,10 +53,10 @@
               <li class="rb-form-field">
                   <input type="text" name="username" placeholder="Your username" id="rb-username" class="rb-form-field-full" />
               </li>
+              <!--
               <li class="rb-form-field">
                   <input type="password" name="password" placeholder="Your password" id="rb-password" class="rb-form-field-full" />
               </li>
-              <!--
               -->
               <li class="rb-form-field">
                   <button id="rb-register" class="rb-register">Register</button>

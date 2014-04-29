@@ -2,22 +2,97 @@
 <html>
   <head>
     <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <link href='common.css' rel='stylesheet' type='text/css'>
     <style>
-    </style>
+    body {
+        margin: 0;
+        width: 20rem;
+    }
+    h3 {
+        margin: 0;
+        padding: .2rem .5rem;
+        font-weight: bold;
+        color: #333;
+    }
+    .header {
+        position: relative;
+        width: 100%;
+        margin: 0 auto .5rem;
+        padding: .2rem;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    }
+    .last-update-time {
+        float: right;
+        position: relative;
+        bottom: 0;
+        right: .5rem;
+        margin: 0;
+    }
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
-     -->
+    .requests-group {
+        padding-top: .5rem;
+    }
+    .review-requests {
+        margin: 0;
+        padding: 0;
+    }
+    .review-requests--update {
+        list-style-type: none;
+        margin: .5rem;
+        padding: .5rem;
+        border-width: 0;
+        border-radius: 4px;
+        box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        min-height: 3rem;
+        background-color: #F2F2F2;
+        color: #929AA2;
+        cursor: pointer;
+    }
+    .review-requests--update:hover {
+        background-color: #fff;
+        color: #5A6772;
+    }
+    .review-requests--update--summary {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    .review-requests--update--time {
+        margin: 0;
+        font-size: .75rem;
+        text-align: right;
+    }
+    </style>
   </head>
   <body>
-      <h1>Hello, chrome extension!</h1>
-      <!-- for development -->
-      <button id="fetch">Fetch!</button>
+      <!--
+      <div class='header clearfix'>
+          <p class='last-update-time'>Last update 14:30:10</p>
+      </div>
+      -->
+      <div class='main'>
+          <div class='requests-group'>
+              <h3>Review requests</h3>
+              <ul id='reviewer' class='review-requests'>
+              </ul>
+          </div>
+          <div class='requests-group'>
+              <h3>Review requests</h3>
+              <ul id='reviewee' class='review-requests'>
+              </ul>
+          </div>
+      </div>
 
-      <script src="popup.js"></script>
+      <script type="text/template" id="updates-template">
+          <p class='review-requests--update--summary'>{{summary}}</p>
+          <p class='review-requests--update--time'>{{time}}</p>
+      </script>
+      <script type="text/template" id="placeholder-template">
+          <p class='review-requests--update--summary'>No updates currently.</p>
+      </script>
+      <script type="text/javascript" src="vendor/mustache.js"></script>
       <script src="updates.js"></script>
+      <script src="popup.js"></script>
   </body>
 </html>
