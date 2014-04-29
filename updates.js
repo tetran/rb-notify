@@ -1,4 +1,5 @@
 var rbRule,
+    baseUri,
     reqUri_reviewer,
     reqUri_reviewee,
     requestTimeout = 1000*2,
@@ -9,8 +10,9 @@ var rbRule,
 
 try {
     rbRule = JSON.parse(localStorage.rbRule);
-    reqUri_reviewer = rbRule.uri + '/api/review-requests/?to-users=' + rbRule.username;
-    reqUri_reviewee = rbRule.uri + '/api/review-requests/?from-user=' + rbRule.username;
+    baseUri = rbRule.uri.replace(/(.*)\/$/, '$1');
+    reqUri_reviewer = baseUri + '/api/review-requests/?to-users=' + rbRule.username;
+    reqUri_reviewee = baseUri + '/api/review-requests/?from-user=' + rbRule.username;
 } catch (ignore) {
 }
 
@@ -35,6 +37,21 @@ function update(uri, container) {
                         summary: req.summary,
                         time: req.last_updated
                     });
+                    li.onclick = function(){
+                        var thisUrl = baseUri+req.url;
+                        console.log(thisUrl);
+                        chrome.tabs.getAllInWindow(undefined, function(tabs) {
+                            for (var i = 0, len = tabs.length; i < len; i++) {
+                                var tab = tabs[i];
+                                if (tab.url && tab.url.indexOf(thisUrl) == 0) {
+                                    chrome.tabs.update(tab.id, {selected: true});
+                                    return;
+                                }
+                            }
+                            // could not find review board tab.
+                            chrome.tabs.create({url: thisUrl});
+                        });
+                    };
                     container.appendChild(li);
                 });
             }
