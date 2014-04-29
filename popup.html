@@ -35,10 +35,14 @@
         padding-top: .5rem;
     }
     .review-requests {
+        position: relative;
         margin: 0;
         padding: 0;
+        min-height: 3.5rem;
+        transition: all 0.3s ease;
     }
     .review-requests--update {
+        position: relative;
         list-style-type: none;
         margin: .5rem;
         padding: .5rem;
@@ -49,6 +53,7 @@
         background-color: #F9F9F9;
         color: #929AA2;
         cursor: pointer;
+        transition: all 0.3s ease;
     }
     .review-requests--update:hover {
         background-color: #fff;
@@ -63,6 +68,11 @@
         margin: 0;
         font-size: .75rem;
         text-align: right;
+    }
+
+    .fade-out {
+        opacity: 0;
+        -webkit-transform: translate(20rem, 0);
     }
     </style>
   </head>
