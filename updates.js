@@ -1,73 +1,46 @@
+var dev = true;    // developing mode
+
 var rbRule,
     baseurl,
     url_reviewer,
     url_reviewee,
-    requestTimeout = 1000*2,
-    fetchTimerId,
-    container_reviewer = document.getElementById('reviewer'),
-    container_reviewee = document.getElementById('reviewee'),
-    listTemplate = document.getElementById('updates-template').innerHTML,
+    requestTimeout = 1000*5,
     lastUpdatedDate = new Date();
 
 try {
     rbRule = JSON.parse(localStorage.rbRule);
-    baseurl = rbRule.url.replace(/(.*)\/$/, '$1');
+    baseurl = rbRule.url.replace(/(.*)\/$/, '$1');    // remove '/'(slash) at the end of url
     url_reviewer = baseurl + '/api/review-requests/?to-users=' + rbRule.username;
     url_reviewee = baseurl + '/api/review-requests/?from-user=' + rbRule.username;
-} catch (ignore) {
+} catch (e) {
+    console.log(e);
 }
 
-function update(url, container) {
-    if (!rbRule) return;
+function update(url, type, onSuccess) {
+    if (!url) return;
 
     var xhr = new XMLHttpRequest();
     var abortTimerId = window.setTimeout(function() {
         xhr.abort();  // synchronously calls onreadystatechange
     }, requestTimeout);
 
+    function handleSuccess(responseText) {
+        window.clearTimeout(abortTimerId);
+        var requests = JSON.parse(responseText).review_requests.map(function(req) {
+            console.log(req);
+            return new ReviewRequest(req, type);
+        });
+        if (onSuccess) {
+            onSuccess(requests, type);
+        }
+    }
+
     try {
         xhr.onreadystatechange = function() {
             if (xhr.readyState != 4) return;
             if (xhr.status == 200) {
-                JSON.parse(xhr.responseText).review_requests.forEach(function(req) {
-                    console.log(req);
-                    var storageKey = url + '-' + req.id + '-' + req.last_updated;
-                    if (localStorage[storageKey] === 'watched') {
-                        return;
-                    }
-                    localStorage[storageKey] = 'fetched';
-
-                    var li = document.createElement('li');
-                    li.className = 'review-requests--update';
-                    li.setAttribute('data-review-url', req.url);
-                    li.innerHTML = Mustache.render(listTemplate, {
-                        summary: req.summary,
-                        time: req.last_updated
-                    });
-                    li.addEventListener('click', function() {
-                        this.classList.add('fade-out');
-                        localStorage[storageKey] = 'watched';
-                        var thisUrl = baseurl+req.url,
-                            self = this;
-                        setTimeout(function() {
-                            chrome.tabs.getAllInWindow(undefined, function(tabs) {
-                                for (var i = 0, len = tabs.length; i < len; i++) {
-                                    var tab = tabs[i];
-                                    if (tab.url && tab.url.indexOf(thisUrl) == 0) {
-                                        chrome.tabs.update(tab.id, {selected: true});
-                                        return;
-                                    }
-                                }
-                                // could not find review board tab.
-                                chrome.tabs.create({url: thisUrl});
-                            });
-                            self.parentNode.removeChild(self);
-                        }, 400);
-                    }, false);
-                    container.appendChild(li);
-                });
+                handleSuccess(xhr.responseText);
             }
-            window.clearTimeout(abortTimerId);
         };
         xhr.open('GET', url + '&last-updated-from=' + lastUpdated(), true);
         xhr.send(null);
@@ -75,34 +48,23 @@ function update(url, container) {
         console.log(e);
     }
 }
-function clear() {
-    container_reviewer.innerHTML = '';
-    container_reviewee.innerHTML = '';
-}
-function updateAsReviewer() {
-    update(url_reviewer, container_reviewer);
-}
-function updateAsReviewee() {
-    update(url_reviewee, container_reviewee);
-}
-function updateDate() {
+
+function updateAll(callback) {
+    update(url_reviewer, 'to', callback);
+    update(url_reviewee, 'from', callback);
     lastUpdatedDate = new Date();
 }
-function updateAll() {
-    // clear();
-    updateAsReviewer();
-    updateAsReviewee();
-    updateDate();
-}
 function lastUpdated() {
+    if (dev) return '2014-01-01';
     return (function(date) {
         function padZero(val) {
             return ('0' + val).slice(-2);
         }
         return date.getFullYear() + '-' +
-            padZero(date.getMonth() + 1) + '-' +
+            padZero(date.getMonth()+1) + '-' +
             padZero(date.getDate()) + 'T' +
             padZero(date.getHours()) + ':' +
-            padZero(date.getMinutes());
+            padZero(date.getMinutes()) + ':' +
+            padZero(date.getSeconds());
     })(lastUpdatedDate);
 }
