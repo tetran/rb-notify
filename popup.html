@@ -84,25 +84,27 @@
       -->
       <div class='main'>
           <div class='requests-group'>
-              <h3>Review requests</h3>
-              <ul id='reviewer' class='review-requests'>
+              <h3>Review requests to you</h3>
+              <ul id='review_to_you' class='review-requests'>
               </ul>
           </div>
           <div class='requests-group'>
-              <h3>Review requests</h3>
-              <ul id='reviewee' class='review-requests'>
+              <h3>Review requests from you</h3>
+              <ul id='review_from_you' class='review-requests'>
               </ul>
           </div>
       </div>
 
       <script type="text/template" id="updates-template">
           <p class='review-requests--update--summary'>{{summary}}</p>
-          <p class='review-requests--update--time'>{{time}}</p>
+          <p class='review-requests--update--time'>{{{time}}}</p>
       </script>
       <script type="text/template" id="placeholder-template">
           <p class='review-requests--update--summary'>No updates currently.</p>
       </script>
+
       <script type="text/javascript" src="vendor/mustache.js"></script>
+      <script src="review-request.js"></script>
       <script src="updates.js"></script>
       <script src="popup.js"></script>
   </body>
