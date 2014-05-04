@@ -1,6 +1,10 @@
-updateAll(function(requests, from_to) {
+updateAll(function(responseText, from_to) {
+    var requests = JSON.parse(responseText).review_requests.map(function(req) {
+        console.log(req);
+        return new ReviewRequest(req, from_to);
+    });
     if (!requests) return;
-
+    
     console.log(requests);
     mergeWithHistory(requests, from_to);
     console.log(requests);

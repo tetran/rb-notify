@@ -26,12 +26,8 @@ function update(url, type, onSuccess) {
 
     function handleSuccess(responseText) {
         window.clearTimeout(abortTimerId);
-        var requests = JSON.parse(responseText).review_requests.map(function(req) {
-            console.log(req);
-            return new ReviewRequest(req, type);
-        });
-        if (onSuccess) {
-            onSuccess(requests, type);
+        if (responseText && onSuccess) {
+            onSuccess(responseText, type);
         }
     }
 
