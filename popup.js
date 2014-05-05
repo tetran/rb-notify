@@ -1,34 +1,17 @@
 updateAll(function(responseText, from_to) {
-    var requests = JSON.parse(responseText).review_requests.map(function(req) {
-        console.log(req);
-        return new ReviewRequest(req, from_to);
-    });
-    if (!requests) return;
-    
+    var requests = ReviewRequest.createFromJSON(responseText, from_to);
+
     console.log(requests);
-    mergeWithHistory(requests, from_to);
+    ReviewRequest.mergeWithHistory(requests, from_to);
     console.log(requests);
 
     ReviewRequest.storeInMemory(requests, from_to);
     ReviewRequest.storeInStorage(from_to);
 
-    renderAll(requests);
+    renderUnreads(requests);
 });
 
-function mergeWithHistory(requests, from_to) {
-    var storedRequests = JSON.parse(localStorage['requests_' + from_to] || '[]').map(function(req) {
-        return new ReviewRequest(req);
-    });
-    requests.forEach(function(req) {
-        storedRequests.forEach(function(sReq) {
-            if (req.isSameRequestAs(sReq)) {
-                req.merge(sReq);
-                return;
-            }
-        });
-    })
-}
-function renderAll(requests) {
+function renderUnreads(requests) {
     requests.filter(function(req) {
         return req.state === 'unread';
     }).forEach(function(req) {
