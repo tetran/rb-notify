@@ -1,11 +1,8 @@
-var dev = true;    // developing mode
-
 var rbRule,
     baseurl,
     url_reviewer,
     url_reviewee,
-    requestTimeout = 1000*5,
-    lastUpdatedDate = new Date();
+    requestTimeout = 1000*5;
 
 try {
     rbRule = JSON.parse(localStorage.rbRule);
@@ -48,10 +45,9 @@ function update(url, type, onSuccess) {
 function updateAll(callback) {
     update(url_reviewer, 'to', callback);
     update(url_reviewee, 'from', callback);
-    lastUpdatedDate = new Date();
 }
 function lastUpdated() {
-    if (dev) return '2014-01-01';
+    var date = new Date(JSON.parse(localStorage.rbStatus).lastPopupTime || new Date());
     return (function(date) {
         function padZero(val) {
             return ('0' + val).slice(-2);
@@ -62,5 +58,5 @@ function lastUpdated() {
             padZero(date.getHours()) + ':' +
             padZero(date.getMinutes()) + ':' +
             padZero(date.getSeconds());
-    })(lastUpdatedDate);
+    })(date);
 }
