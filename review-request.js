@@ -1,15 +1,14 @@
 (function(window) {
-    function ReviewRequest(data, from_to) {
+    function ReviewRequest(data) {
         this.id = data.id;
         this.summary = data.summary;
         this.lastUpdated = data.last_updated;
-        this.from_to = data.from_to || from_to;    // 'from' or 'to'. 'from' means you're a reviewee, and 'to' reviewer
         this.state = data.state || 'unread';
-        this.key = this.id + '-' + this.from_to;
+        this.key = this.id;
 
         // for view
         if (document.querySelector('#review-requests')) {
-            this.container = document.querySelector('#review_' + this.from_to + '_you');
+            this.container = document.querySelector('#review-requests');
             this.listTemplate = document.querySelector('#updates-template').innerHTML;
             this.el = document.createElement('li');
         }
@@ -20,7 +19,6 @@
             id: this.id,
             summary: this.summary,
             last_updated: this.lastUpdated,
-            from_to: this.from_to,
             state: this.state,
             key: this.key
         };
@@ -54,7 +52,7 @@
                     self = this;
                 this.classList.add('fade-out');
                 request.state = 'read';
-                ReviewRequest.storeInStorage(request.from_to);
+                ReviewRequest.storeInStorage();
                 ReviewRequest.updateBadgeCount();
 
                 setTimeout(function() {
@@ -89,28 +87,27 @@
     }
 
     // meta functions
-    ReviewRequest.from = [];
-    ReviewRequest.to = [];
-    ReviewRequest.storeInMemory = function(requests, from_to) {
-        ReviewRequest[from_to] = requests;
+    ReviewRequest.requests = [];
+    ReviewRequest.storeInMemory = function(requests) {
+        ReviewRequest.requests = requests;
     };
-    ReviewRequest.storeInStorage = function(from_to) {
-        var requests = ReviewRequest[from_to],
+    ReviewRequest.storeInStorage = function() {
+        var requests = ReviewRequest.requests,
             unreads = requests.filter(function(req) {
                 return req.state === 'unread';
             });
-        localStorage['requests_' + from_to] = JSON.stringify(requests.map(function(req) {
+        localStorage['requests'] = JSON.stringify(requests.map(function(req) {
             return req.toData();
         }));
-        localStorage['rbCount_' + from_to] = unreads.length;
+        localStorage['rbCount'] = unreads.length;
     };
-    ReviewRequest.createFromJSON = function(json, from_to) {
+    ReviewRequest.createFromJSON = function(json) {
         return JSON.parse(json).review_requests.map(function(req) {
-            return new ReviewRequest(req, from_to);
+            return new ReviewRequest(req);
         });
     };
-    ReviewRequest.mergeWithHistory = function(requests, from_to) {
-        var storedRequests = JSON.parse(localStorage['requests_' + from_to] || '[]').map(function(req) {
+    ReviewRequest.mergeWithHistory = function(requests) {
+        var storedRequests = JSON.parse(localStorage['requests'] || '[]').map(function(req) {
             return new ReviewRequest(req);
         });
 
@@ -131,7 +128,7 @@
         });
     }
     ReviewRequest.updateBadgeCount = function() {
-        var cnt = (localStorage.rbCount_from || 0)*1 + (localStorage.rbCount_to || 0)*1;
+        var cnt = (localStorage.rbCount || 0)*1;
         chrome.browserAction.setBadgeText({
             text: cnt === 0 ? '' : (cnt+'')
         });

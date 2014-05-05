@@ -3,7 +3,7 @@ chrome.alarms.onAlarm.addListener(updateCount);
 
 chrome.runtime.onInstalled.addListener(function() {
     localStorage.rbStatus = JSON.stringify({
-        lastPopupTime: new Date()
+        lastPopupTime: new Date(0)
     });
     updateCount();
 });
@@ -14,10 +14,10 @@ chrome.runtime.onStartup.addListener(function() {
 updateCount();
 
 function updateCount() {
-    updateAll(function(responseText, from_to) {
-        var requests = ReviewRequest.createFromJSON(responseText, from_to);
-        ReviewRequest.mergeWithHistory(requests, from_to);
-        localStorage['rbCount_' + from_to] = requests.filter(function(req) {
+    updateAll(function(responseText) {
+        var requests = ReviewRequest.createFromJSON(responseText);
+        ReviewRequest.mergeWithHistory(requests);
+        localStorage['rbCount'] = requests.filter(function(req) {
             return req.state === 'unread';
         }).length;
 

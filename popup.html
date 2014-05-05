@@ -8,33 +8,17 @@
     body {
         margin: 0;
         width: 20rem;
-        background-color: #EDEFF0;
     }
-    h3 {
-        margin: 0;
-        padding: .2rem .5rem;
-        font-weight: bold;
-        color: #333;
-    }
-    .header {
-        position: relative;
+    .main {
+        box-sizing: border-box;
         width: 100%;
-        margin: 0 auto .5rem;
-        padding: .2rem;
-        box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-    }
-    .last-update-time {
-        float: right;
-        position: relative;
-        bottom: 0;
-        right: .5rem;
+        height: 100%;
         margin: 0;
+        padding: 0;
     }
 
-    .requests-group {
-        padding-top: .5rem;
-    }
     .review-requests {
+        box-sizing: border-box;
         position: relative;
         margin: 0;
         padding: 0;
@@ -42,22 +26,26 @@
         transition: all 0.3s ease;
     }
     .review-requests--update {
+        box-sizing: border-box;
         position: relative;
         list-style-type: none;
-        margin: .5rem;
+        margin: 0;
         padding: .5rem;
-        border-width: 0;
-        border-radius: 4px;
-        box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        border-left: solid 3px transparent;
+        border-bottom: solid 1px #DDD;
         min-height: 3rem;
-        background-color: #F9F9F9;
-        color: #929AA2;
+        background-color: #EEE;
+        color: #999;
         cursor: pointer;
         transition: all 0.3s ease;
     }
+    .review-requests--update:last-child {
+        border-bottom-width: 0;
+    }
     .review-requests--update:hover {
+        border-left: solid 3px #5FCF80;
         background-color: #fff;
-        color: #5A6772;
+        color: #666;
     }
     .review-requests--update--summary {
         margin: 0;
@@ -72,27 +60,14 @@
 
     .fade-out {
         opacity: 0;
-        -webkit-transform: translate(20rem, 0);
+        -webkit-transform: translate(22rem, 0);
     }
     </style>
   </head>
   <body>
-      <!--
-      <div class='header clearfix'>
-          <p class='last-update-time'>Last update 14:30:10</p>
-      </div>
-      -->
-      <div class='main' id='review-requests'>
-          <div class='requests-group'>
-              <h3>Review requests to you</h3>
-              <ul id='review_to_you' class='review-requests'>
-              </ul>
-          </div>
-          <div class='requests-group'>
-              <h3>Review requests from you</h3>
-              <ul id='review_from_you' class='review-requests'>
-              </ul>
-          </div>
+      <div class='main'>
+          <ul id='review-requests' class='review-requests'>
+          </ul>
       </div>
 
       <script type="text/template" id="updates-template">

@@ -1,6 +1,6 @@
 var rbRule;
 
-function storeRule(rule) {
+function storeRule() {
     localStorage.rbRule = JSON.stringify({
         url: document.getElementById('rb-uri').value,
         username: document.getElementById('rb-username').value
@@ -32,6 +32,6 @@ function testAccount() {
 window.onload = function() {
     loadStoredRule();
     document.getElementById('rb-register').onclick = function() {
-        storeRule(rbRule || {});
+        storeRule();
     };
 };

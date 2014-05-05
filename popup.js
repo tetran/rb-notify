@@ -1,14 +1,20 @@
-updateAll(function(responseText, from_to) {
-    var requests = ReviewRequest.createFromJSON(responseText, from_to);
+updateAll(function(responseText) {
+    var requests = ReviewRequest.createFromJSON(responseText);
 
     console.log(requests);
-    ReviewRequest.mergeWithHistory(requests, from_to);
+    ReviewRequest.mergeWithHistory(requests);
     console.log(requests);
 
-    ReviewRequest.storeInMemory(requests, from_to);
-    ReviewRequest.storeInStorage(from_to);
+    ReviewRequest.storeInMemory(requests);
+    ReviewRequest.storeInStorage();
+    ReviewRequest.updateBadgeCount();
 
+    document.querySelector('#review-requests').innerHTML = '';
     renderUnreads(requests);
+});
+
+localStorage.rbStatus = JSON.stringify({
+    lastPopupTime: new Date()
 });
 
 function renderUnreads(requests) {

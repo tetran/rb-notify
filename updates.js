@@ -13,7 +13,7 @@ try {
     console.log(e);
 }
 
-function update(url, type, onSuccess) {
+function update(url, onSuccess) {
     if (!url) return;
 
     var xhr = new XMLHttpRequest();
@@ -24,7 +24,7 @@ function update(url, type, onSuccess) {
     function handleSuccess(responseText) {
         window.clearTimeout(abortTimerId);
         if (responseText && onSuccess) {
-            onSuccess(responseText, type);
+            onSuccess(responseText);
         }
     }
 
@@ -43,11 +43,8 @@ function update(url, type, onSuccess) {
 }
 
 function updateAll(callback) {
-    update(url_reviewer, 'to', callback);
-    update(url_reviewee, 'from', callback);
-    localStorage.rbStatus = JSON.stringify({
-        lastPopupTime: new Date()
-    });
+    update(url_reviewer, callback);
+    update(url_reviewee, callback);
 }
 function lastUpdated() {
     var date = new Date(JSON.parse(localStorage.rbStatus).lastPopupTime || new Date());
@@ -59,7 +56,7 @@ function lastUpdated() {
             padZero(date.getMonth()+1) + '-' +
             padZero(date.getDate()) + 'T' +
             padZero(date.getHours()) + ':' +
-            padZero(date.getMinutes()) + ':' +
+            padZero(date.getMinutes()-1) + ':' +
             padZero(date.getSeconds());
     })(date);
 }
