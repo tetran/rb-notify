@@ -11,13 +11,16 @@ chrome.runtime.onStartup.addListener(function() {
     updateCount();
 });
 
+updateCount();
+
 function updateCount() {
     updateAll(function(responseText, from_to) {
-        localStorage['rbCount_' + from_to] = JSON.parse(responseText).review_requests.length;
+        var requests = ReviewRequest.createFromJSON(responseText, from_to);
+        ReviewRequest.mergeWithHistory(requests, from_to);
+        localStorage['rbCount_' + from_to] = requests.filter(function(req) {
+            return req.state === 'unread';
+        }).length;
 
-        var cnt = (localStorage.rbCount_from || 0)*1 + (localStorage.rbCount_to || 0)*1;
-        chrome.browserAction.setBadgeText({
-            text: cnt === 0 ? '' : (cnt+'')
-        });
+        ReviewRequest.updateBadgeCount();
     });
 }

@@ -45,6 +45,9 @@ function update(url, type, onSuccess) {
 function updateAll(callback) {
     update(url_reviewer, 'to', callback);
     update(url_reviewee, 'from', callback);
+    localStorage.rbStatus = JSON.stringify({
+        lastPopupTime: new Date()
+    });
 }
 function lastUpdated() {
     var date = new Date(JSON.parse(localStorage.rbStatus).lastPopupTime || new Date());
