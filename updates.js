@@ -56,7 +56,7 @@ function lastUpdated() {
             padZero(date.getMonth()+1) + '-' +
             padZero(date.getDate()) + 'T' +
             padZero(date.getHours()) + ':' +
-            padZero(date.getMinutes()-1) + ':' +
+            padZero(date.getMinutes()-5) + ':' +    // -5 -> work around to handle time lag between server and client
             padZero(date.getSeconds());
     })(date);
 }
