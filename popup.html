@@ -33,32 +33,33 @@
         padding: .5rem;
         border-left: solid 3px transparent;
         border-bottom: solid 1px #DDD;
-        min-height: 3rem;
-        background-color: #EEE;
-        color: #999;
+        background-color: #fff;
+        color: #666;
         cursor: pointer;
-        transition: all 0.3s ease;
     }
     .review-requests--update:last-child {
         border-bottom-width: 0;
     }
     .review-requests--update:hover {
         border-left: solid 3px #5FCF80;
-        background-color: #fff;
-        color: #666;
+        background-color: #F5F8FA;
     }
     .review-requests--update--summary {
         margin: 0;
+        min-height: 2rem;
+        overflow: hidden;
         font-size: 1rem;
         line-height: 1.6;
     }
     .review-requests--update--time {
-        margin: 0;
-        font-size: .75rem;
+        margin: .5rem 0 0;
+        font-size: .8rem;
         text-align: right;
+        line-height: 1.6;
     }
 
     .fade-out {
+        transition: all .3s ease;
         opacity: 0;
         -webkit-transform: translate(22rem, 0);
     }
