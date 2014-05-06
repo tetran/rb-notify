@@ -1,4 +1,5 @@
-var rbRule;
+var rbRule,
+    registerBtn;
 
 function storeRule() {
     localStorage.rbRule = JSON.stringify({
@@ -27,13 +28,18 @@ function setFieldValue(elem_id, value) {
 
 document.addEventListener('DOMContentLoaded', function() {
     loadStoredRule();
-    document.getElementById('rb-register-btn').onclick = function() {
-        storeRule();
-
-        document.querySelector('#note').classList.add('animate');
-        setTimeout(function() {
-            document.querySelector('#note').classList.remove('animate');
-            onInit();
-        }, 2000);
-    };
+    registerBtn = document.querySelector('#rb-register-btn')
+    registerBtn.addEventListener('click', handleRegister, false);
 });
+
+function handleRegister() {
+    registerBtn.removeEventListener('click', handleRegister);
+    var note = document.querySelector('#note');
+    storeRule();
+    note.classList.add('animate');
+    setTimeout(function() {
+        onInit();
+        note.classList.remove('animate');
+        registerBtn.addEventListener('click', handleRegister, false);
+    }, 2000);
+}
