@@ -4,13 +4,15 @@ var rbRule,
     url_reviewee,
     requestTimeout = 1000*5;
 
-try {
-    rbRule = JSON.parse(localStorage.rbRule);
-    baseurl = rbRule.url.replace(/(.*)\/$/, '$1');    // remove '/'(slash) at the end of url
-    url_reviewer = baseurl + '/api/review-requests/?to-users=' + rbRule.username;
-    url_reviewee = baseurl + '/api/review-requests/?from-user=' + rbRule.username;
-} catch (e) {
-    console.log(e);
+function initParams() {
+    try {
+        rbRule = JSON.parse(localStorage.rbRule);
+        baseurl = rbRule.url.replace(/(.*)\/$/, '$1');    // remove '/'(slash) at the end of url
+        url_reviewer = baseurl + '/api/review-requests/?to-users=' + rbRule.username;
+        url_reviewee = baseurl + '/api/review-requests/?from-user=' + rbRule.username;
+    } catch (e) {
+        console.log(e);
+    }
 }
 
 function update(url, onSuccess) {
@@ -43,6 +45,7 @@ function update(url, onSuccess) {
 }
 
 function updateAll(callback) {
+    initParams();
     update(url_reviewer, callback);
     update(url_reviewee, callback);
 }

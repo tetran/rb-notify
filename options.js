@@ -30,16 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('rb-register-btn').onclick = function() {
         storeRule();
 
-        localStorage.rbCount = 0;
-        localStorage.requests = JSON.stringify([]);
-        localStorage.rbStatus = JSON.stringify({
-            lastPopupTime: new Date(0)
-        });
-        chrome.browserAction.setBadgeText({text: ''});
-
         document.querySelector('#note').classList.add('animate');
         setTimeout(function() {
             document.querySelector('#note').classList.remove('animate');
+            onInit();
         }, 2000);
     };
 });
