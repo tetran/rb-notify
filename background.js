@@ -1,17 +1,21 @@
 chrome.alarms.create('refresh', {periodInMinutes: 1});
 chrome.alarms.onAlarm.addListener(updateCount);
 
-chrome.runtime.onInstalled.addListener(function() {
-    localStorage.rbStatus = JSON.stringify({
-        lastPopupTime: new Date(0)
-    });
-    updateCount();
-});
+chrome.runtime.onInstalled.addListener(onInit);
 chrome.runtime.onStartup.addListener(function() {
     updateCount();
 });
 
-updateCount();
+function onInit() {
+    localStorage.rbCount = 0;
+    localStorage.requests = JSON.stringify([]);
+    localStorage.rbStatus = JSON.stringify({
+        lastPopupTime: new Date(0)
+    });
+    chrome.browserAction.setBadgeText({text: ''});
+
+    updateCount();
+}
 
 function updateCount() {
     updateAll(function(responseText) {
@@ -24,3 +28,5 @@ function updateCount() {
         ReviewRequest.updateBadgeCount();
     });
 }
+
+updateCount();

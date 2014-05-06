@@ -6,7 +6,9 @@
     <link href='common.css' rel='stylesheet' type='text/css'>
     <style>
     input {
+        box-sizing: border-box;
         padding: 8px;
+        font-size: 1rem;
         line-height: 1.6;
         background-color: #E2E5E8;
         border-width: 0;
@@ -14,6 +16,7 @@
         border-radius: 2px;
         transition: border, background 0.4s ease;
     }
+
     input:focus {
         background-color: #FFF;
         border-color: #5FCF80;
@@ -23,7 +26,7 @@
     }
     .container {
         width: 24rem;
-        margin: 0 auto;
+        margin: 2rem auto;
         padding: 2rem;
         border-radius: 4px;
         box-shadow: 0 1px 1px rgba(0,0,0,0.25);
@@ -32,23 +35,54 @@
     .rb-form {
         margin: 0;
         padding: 0;
-        overflow: hidden;
     }
     .rb-form-field {
+        box-sizing: border-box;
+        position: relative;
         list-style: none;
         margin: .2rem 0;
     }
     .rb-form-field-full {
-        width: 98%;
+        width: 100%;
+    }
+    .rb-register-btn {
+        float: right;
+        margin-right: 0;
+    }
+
+    @-webkit-keyframes slideDown {
+        0%, 100% { -webkit-transform: translateY(-2.5rem);}
+        10%, 90% { -webkit-transform: translateY(0px);}
+    }
+    .note {
+        position: fixed;
+        z-index: 100;
+        top: 0;
+        left: 0;
+        right: 0;
+        line-height: 2.1rem;
+        font-size: 1.1rem;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        background-color: rgba(95,207,128, 0.7);
+        text-align: center;
+        box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+        -webkit-transform: translateY(-2.5rem);
+    }
+    .note.animate {
+        -webkit-transform: translateY(-2.5rem);
+        -webkit-animation: slideDown 1.5s .2s 1 ease forwards;
     }
     </style>
   </head>
   <body>
+      <div id='note' class='note'>
+          Saved Successfully!
+      </div>
       <div class="container">
           <h2>Review Board Notifier</h2>
           <ul class="rb-form">
               <li class="rb-form-field">
-                  <input type="uri" name="uri" placeholder="Server URI (e.g. http://reviewboard.com/)" id="rb-uri" class="rb-form-field-full" />
+                  <input type="uri" name="uri" placeholder="Server URL (e.g. http://reviewboard.com/)" id="rb-uri" class="rb-form-field-full" />
               </li>
               <li class="rb-form-field">
                   <input type="text" name="username" placeholder="Your username" id="rb-username" class="rb-form-field-full" />
@@ -58,8 +92,8 @@
                   <input type="password" name="password" placeholder="Your password" id="rb-password" class="rb-form-field-full" />
               </li>
               -->
-              <li class="rb-form-field">
-                  <button id="rb-register" class="rb-register">Register</button>
+              <li class="rb-form-field clearfix">
+                  <button id="rb-register-btn" class="rb-register-btn btn btn-green">Register</button>
               </li>
           </ul>
       </div>

@@ -25,13 +25,21 @@ function setFieldValue(elem_id, value) {
     document.getElementById(elem_id).value = value || '';
 }
 
-function testAccount() {
-
-}
-
-window.onload = function() {
+document.addEventListener('DOMContentLoaded', function() {
     loadStoredRule();
-    document.getElementById('rb-register').onclick = function() {
+    document.getElementById('rb-register-btn').onclick = function() {
         storeRule();
+
+        localStorage.rbCount = 0;
+        localStorage.requests = JSON.stringify([]);
+        localStorage.rbStatus = JSON.stringify({
+            lastPopupTime: new Date(0)
+        });
+        chrome.browserAction.setBadgeText({text: ''});
+
+        document.querySelector('#note').classList.add('animate');
+        setTimeout(function() {
+            document.querySelector('#note').classList.remove('animate');
+        }, 2000);
     };
-};
+});
