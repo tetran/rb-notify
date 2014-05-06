@@ -1,5 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    updateAll(function(responseText) {
+    updateAll(handleResponse);
+
+    localStorage.rbStatus = JSON.stringify({
+        lastPopupTime: new Date()
+    });
+
+    function handleResponse(responseText) {
         var requests = ReviewRequest.createFromJSON(responseText);
 
         console.log(requests);
@@ -12,11 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelector('#review-requests').innerHTML = '';
         renderUnreads(requests);
-    });
-
-    localStorage.rbStatus = JSON.stringify({
-        lastPopupTime: new Date()
-    });
+    }
 
     function renderUnreads(requests) {
         requests.filter(function(req) {

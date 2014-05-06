@@ -24,11 +24,10 @@
         };
     };
 
-    ReviewRequest.prototype.merge = function(another) {
-        if (this.lastUpdated === another.lastUpdated) {
-            this.state = another.state;
+    ReviewRequest.prototype.merge = function(another_older) {
+        if (this.lastUpdated === another_older.lastUpdated) {
+            this.state = another_older.state;
         }
-        this.lastUpdated = another.lastUpdated;
     };
 
     ReviewRequest.prototype.isSameRequestAs = function(another) {
@@ -96,18 +95,20 @@
             unreads = requests.filter(function(req) {
                 return req.state === 'unread';
             });
-        localStorage['requests'] = JSON.stringify(requests.map(function(req) {
+        localStorage.requests = JSON.stringify(requests.map(function(req) {
             return req.toData();
         }));
-        localStorage['rbCount'] = unreads.length;
+        localStorage.rbCount = unreads.length;
     };
     ReviewRequest.createFromJSON = function(json) {
-        return JSON.parse(json).review_requests.map(function(req) {
+        var reqs = JSON.parse(json).review_requests;
+        console.log(reqs);
+        return reqs.map(function(req) {
             return new ReviewRequest(req);
         });
     };
     ReviewRequest.mergeWithHistory = function(requests) {
-        var storedRequests = JSON.parse(localStorage['requests'] || '[]').map(function(req) {
+        var storedRequests = JSON.parse(localStorage.requests || '[]').map(function(req) {
             return new ReviewRequest(req);
         });
 
@@ -116,6 +117,8 @@
                 if (req.isSameRequestAs(sReq)) {
                     req.merge(sReq);
                     sReq.merged = true;
+                    console.log('merged');
+                    console.log(req);
                     return;
                 }
             });
