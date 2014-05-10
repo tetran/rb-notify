@@ -20,23 +20,29 @@ body {
 .btn {
     display: inline-block;
     padding: 0 1rem;
+    border-style: solid;
+    border-width: 1px;
     line-height: 2rem;
     font-size: 1rem;
     border-radius: 2px;
     cursor: pointer;
 }
-.btn:active {
-    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px 0 inset;
-}
 .btn-green {
-    border: solid 1px #48b869;
+    border-color: #48b869;
     background-color: #5FCF80;
     background-image: -webkit-linear-gradient(top, #5FCF80, #58be75);
     color: #fff;
+}
+
+.btn:hover {   
+    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 1px 0;
 }
 .btn-green:hover {
     border-color: #3c8251;
     background-color: #4da869;
     background-image: -webkit-linear-gradient(top, #5FCF80, #4da869);
-    box-shadow: rgba(0, 0, 0, 0.2) 0 1px 1px 0;
+}
+
+.btn:active {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px 0 inset;
 }

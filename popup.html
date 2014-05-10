@@ -35,7 +35,6 @@
         border-bottom: solid 1px #DDD;
         background-color: #fff;
         color: #666;
-        cursor: pointer;
     }
     .review-requests--update:last-child {
         border-bottom-width: 0;
@@ -57,11 +56,29 @@
         text-align: right;
         line-height: 1.6;
     }
+    
+    .review-requests--update--control {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    .review-requests--update--control>li {
+        float: right;
+        margin-left: .8rem;
+        cursor: pointer;
+    }
+    .review-requests--update--control>li>img {
+        height: 1rem;
+    }
 
     .fade-out {
         transition: all .2s ease;
         opacity: 0;
         -webkit-transform: translate(22rem, 0);
+    }
+
+    ::-webkit-scrollbar {
+        width: 3px;
     }
     </style>
   </head>
@@ -72,6 +89,10 @@
       </div>
 
       <script type="text/template" id="updates-template">
+          <ul class='review-requests--update--control  clearfix'>
+              <li class='control'><img src='checkmark2.svg'/></li>
+              <li class='control'><img src='forward1.svg'/></li>
+          </ul>
           <p class='review-requests--update--summary'>{{summary}}</p>
           <p class='review-requests--update--time'>{{{time}}}</p>
       </script>

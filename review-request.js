@@ -45,30 +45,36 @@
 
         function addClickEvent(request) {
             var el = request.el,
-                url = '/r/' + request.id;
-            el.addEventListener('click', function() {
-                var thisUrl = baseurl+url,
-                    self = this;
-                this.classList.add('fade-out');
-                request.state = 'read';
-                ReviewRequest.storeInStorage();
-                ReviewRequest.updateBadgeCount();
+                controls = el.getElementsByClassName('control'),
+                check = controls[0],
+                forward = controls[1],
+                url = '/r/' + request.id,
+                markAsRead = function() {
+                    request.state = 'read';
+                    ReviewRequest.storeInStorage();
+                    ReviewRequest.updateBadgeCount();
 
-                setTimeout(function() {
-                    chrome.tabs.getAllInWindow(undefined, function(tabs) {
-                        for (var i = 0, len = tabs.length; i < len; i++) {
-                            var tab = tabs[i];
-                            if (tab.url && tab.url.indexOf(thisUrl) == 0) {
-                                chrome.tabs.update(tab.id, {selected: true});
-                                return;
-                            }
+                    el.parentNode.removeChild(el);
+                };
+            
+            forward.addEventListener('click', function() {
+                var thisUrl = baseurl+url;
+                chrome.tabs.getAllInWindow(undefined, function(tabs) {
+                    for (var i = 0, len = tabs.length; i < len; i++) {
+                        var tab = tabs[i];
+                        if (tab.url && tab.url.indexOf(thisUrl) == 0) {
+                            chrome.tabs.update(tab.id, {selected: true});
+                            return;
                         }
-                        // could not find review board tab.
-                        chrome.tabs.create({url: thisUrl});
-                    });
-                    self.parentNode.removeChild(self);
-                }, 400);
+                    }
+                    // could not find review board tab.
+                    chrome.tabs.create({url: thisUrl});
+                });
+                
+                markAsRead();
             }, false);
+            
+            check.addEventListener('click', markAsRead, false);
         }
     };
 
