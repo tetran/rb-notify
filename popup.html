@@ -65,6 +65,7 @@
         list-style: none;
     }
     .review-requests--update--controls__control {
+        position: relative;
         float: right;
         margin-right: .4rem;
         margin-left: .4rem;
@@ -75,6 +76,7 @@
     .review-requests--update--controls__control:hover {
         opacity: 0.6;
     }
+    
     .review-requests--update--controls__control>img {
         height: 1rem;
     }
@@ -103,6 +105,37 @@
         background-color: #ddd;
         box-shadow: inset 0 0 1px rgba(0,0,0,.3);
     }
+    
+    /* Custom tooltip
+    .review-requests--update--controls__control:hover:before {
+        content: "";
+        position: absolute;
+        bottom: 1.22rem;
+        right: 3px;
+        z-index: 101;
+        border-style: solid;
+        border-width: 6px 6px 0 6px;
+        border-color: #333 transparent;
+    }
+    .review-requests--update--controls__control:hover:after {
+        display: block;
+        position: absolute;
+        bottom: 1.5rem;
+        right: 0;
+        width: 5rem;
+        z-index: 100;
+        padding: .5rem;
+        border-radius: 3px;
+        background-color: rgba(0,0,0,.8);
+        color: #f9f9f9;
+    }
+    .control-check:hover:after {
+        content: "Mark as read";
+    }
+    .control-forward:hover:after {
+        content: "Open link";
+    }
+    */
     </style>
   </head>
   <body>
@@ -115,8 +148,8 @@
           <p class='review-requests--update--summary'>{{summary}}</p>
           <ul class='review-requests--update--controls  clearfix'>
               <li class='review-requests--update--time'>{{{time}}}</li>
-              <li class='review-requests--update--controls__control control-check'><img src='checkmark2.svg'/></li>
-              <li class='review-requests--update--controls__control control-forward'><img src='forward1.svg'/></li>
+              <li class='review-requests--update--controls__control control-check' title='Mark as read'><img src='checkmark2.svg'/></li>
+              <li class='review-requests--update--controls__control control-forward' title='Open link'><img src='forward1.svg'/></li>
           </ul>
       </script>
       <script type="text/template" id="placeholder-template">
