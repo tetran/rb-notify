@@ -45,21 +45,23 @@
 
         function addClickEvent(request) {
             var el = request.el,
-                controls = el.getElementsByClassName('control'),
-                check = controls[0],
-                forward = controls[1],
+                check = el.getElementsByClassName('control-check')[0],
+                forward = el.getElementsByClassName('control-forward')[0],
                 url = '/r/' + request.id,
                 markAsRead = function() {
+                    el.classList.add('fade-out');
                     request.state = 'read';
                     ReviewRequest.storeInStorage();
                     ReviewRequest.updateBadgeCount();
-
-                    el.parentNode.removeChild(el);
+                    setTimeout(function() {
+                        el.parentNode.removeChild(el);
+                    }, 400);
                 };
             
             forward.addEventListener('click', function() {
-                var thisUrl = baseurl+url;
+                markAsRead();
                 chrome.tabs.getAllInWindow(undefined, function(tabs) {
+                    var thisUrl = baseurl+url;
                     for (var i = 0, len = tabs.length; i < len; i++) {
                         var tab = tabs[i];
                         if (tab.url && tab.url.indexOf(thisUrl) == 0) {
@@ -71,7 +73,6 @@
                     chrome.tabs.create({url: thisUrl});
                 });
                 
-                markAsRead();
             }, false);
             
             check.addEventListener('click', markAsRead, false);

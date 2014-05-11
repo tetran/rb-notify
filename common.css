@@ -37,7 +37,8 @@ body {
 .btn:hover {   
     box-shadow: rgba(0, 0, 0, 0.2) 0 1px 1px 0;
 }
-.btn-green:hover {
+.btn-green:hover,
+.btn-green:focus {
     border-color: #3c8251;
     background-color: #4da869;
     background-image: -webkit-linear-gradient(top, #5FCF80, #4da869);
