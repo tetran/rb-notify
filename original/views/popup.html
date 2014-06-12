@@ -79,7 +79,7 @@
     }
     
     .review-requests--update--controls__control>img {
-        height: 1rem;
+        height: 1.2rem;
     }
     .review-requests--update:hover .review-requests--update--controls__control {
         visibility: visible;
@@ -115,11 +115,16 @@
       </div>
 
       <script type="text/template" id="updates-template">
+
           <p class='review-requests--update--summary'>{{summary}}</p>
           <ul class='review-requests--update--controls  clearfix'>
               <li class='review-requests--update--time'>{{{time}}}</li>
-              <li class='review-requests--update--controls__control control-check' title='Mark as read'><img src='../img/checkmark2.svg'/></li>
-              <li class='review-requests--update--controls__control control-forward' title='Open link'><img src='../img/forward1.svg'/></li>
+              <li class='review-requests--update--controls__control control-check' title='Mark as read'>
+                <img src='../img/checkmark2.svg'/>
+              </li>
+              <li class='review-requests--update--controls__control control-forward' title='Open link'>
+                <img src='../img/forward1.svg'/>
+              </li>
           </ul>
       </script>
       <script type="text/template" id="placeholder-template">
